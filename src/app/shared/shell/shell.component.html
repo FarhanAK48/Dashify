@@ -1,0 +1,18 @@
+<div class="layout">
+  <app-sidebar
+    [open]="sidebarOpen()"
+    [isMobile]="isMobile()"
+    (closed)="sidebarOpen.set(false)">
+  </app-sidebar>
+
+  <div class="content" [class.content-shifted]="!isMobile()">
+    <app-topbar
+      [title]="pageTitle"
+      (menuToggle)="toggleSidebar()">
+    </app-topbar>
+
+    <main class="main-area">
+      <ng-content />
+    </main>
+  </div>
+</div>

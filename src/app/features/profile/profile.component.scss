@@ -1,0 +1,24 @@
+.profile-page { max-width: 42rem; display: flex; flex-direction: column; gap: 1rem; }
+
+.profile-header-card { }
+.profile-header { display: flex; align-items: center; gap: 1.25rem; }
+.profile-avatar { width: 4rem; height: 4rem; border-radius: 1rem; background: rgba(99,102,241,0.2); border: 2px solid rgba(99,102,241,0.35); display: flex; align-items: center; justify-content: center; color: #a5b4fc; font-weight: 800; font-size: 1.5rem; flex-shrink: 0; }
+.profile-name  { color: white; font-size: 1.25rem; font-weight: 800; margin: 0 0 0.125rem; }
+.profile-email { color: #64748b; font-size: 0.875rem; margin: 0; }
+
+.section-title { color: white; font-size: 0.9375rem; font-weight: 700; margin: 0 0 1rem; }
+
+.info-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+  @media(max-width:480px){ grid-template-columns:1fr; } }
+.info-item  { }
+.info-label { color: #64748b; font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.25rem; }
+.info-value { color: white; font-size: 0.9375rem; font-weight: 500; margin: 0; }
+.info-token { color: #475569; font-size: 0.75rem; font-family: monospace; margin: 0; word-break: break-all; }
+
+.perms-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.perm-item  { display: flex; align-items: center; gap: 0.75rem; color: #cbd5e1; font-size: 0.875rem; }
+.perm-icon  { font-size: 1rem; width: 1.25rem; text-align: center; }
+.perm-denied{ color: #475569; }
+
+.signout-card  { border-color: rgba(239,68,68,0.2); }
+.signout-desc  { color: #64748b; font-size: 0.875rem; margin: 0 0 1rem; }

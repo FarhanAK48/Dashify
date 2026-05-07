@@ -1,0 +1,70 @@
+<app-shell [pageTitle]="isEdit ? 'Edit User' : 'Add User'">
+  <div class="form-page">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a routerLink="/users" class="breadcrumb-link">Users</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">{{ isEdit ? 'Edit User' : 'New User' }}</span>
+    </div>
+
+    <div class="card form-card">
+      <h2 class="form-title">{{ isEdit ? 'Edit User' : 'Add New User' }}</h2>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="fields-grid">
+
+          <div class="field">
+            <label class="field-label">Full Name *</label>
+            <input type="text" formControlName="name" class="form-input" placeholder="Alice Johnson" />
+            <p *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="field-error">Name is required.</p>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Email *</label>
+            <input type="email" formControlName="email" class="form-input" placeholder="alice@example.com" />
+            <p *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="field-error">Valid email required.</p>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Role</label>
+            <select formControlName="role" class="form-input">
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Status</label>
+            <select formControlName="status" class="form-input">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Department</label>
+            <select formControlName="department" class="form-input">
+              <option *ngFor="let d of departments" [value]="d">{{ d }}</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Join Date</label>
+            <input type="date" formControlName="joinDate" class="form-input" />
+          </div>
+
+        </div>
+
+        <div *ngIf="success()" class="success-msg">
+          ✅ User {{ isEdit ? 'updated' : 'created' }} successfully! Redirecting...
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">{{ isEdit ? 'Save Changes' : 'Create User' }}</button>
+          <a routerLink="/users" class="btn-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</app-shell>

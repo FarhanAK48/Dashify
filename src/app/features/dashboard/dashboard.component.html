@@ -1,0 +1,106 @@
+<app-shell pageTitle="Dashboard">
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div *ngFor="let s of stats" class="stat-card card">
+      <div class="stat-icon">{{ s.icon }}</div>
+      <div>
+        <p class="stat-label">{{ s.label }}</p>
+        <p class="stat-value">{{ s.value }}</p>
+        <p class="stat-change" [class.positive]="s.positive" [class.negative]="!s.positive">
+          {{ s.change }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="charts-row">
+
+    <!-- Bar Chart -->
+    <div class="card chart-card">
+      <h3 class="chart-title">Monthly Revenue</h3>
+      <div class="bar-chart">
+        <div *ngFor="let bar of revenueChart" class="bar-col">
+          <span class="bar-val">{{ bar.value }}</span>
+          <div class="bar-fill" [style.height.%]="bar.height"></div>
+          <span class="bar-label">{{ bar.label }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Donut Chart -->
+    <div class="card donut-card">
+      <h3 class="chart-title">User Roles</h3>
+      <div class="donut-wrap">
+        <svg viewBox="0 0 100 100" class="donut-svg">
+          <circle cx="50" cy="50" r="35" fill="none" stroke="#1e293b" stroke-width="16"/>
+          <circle cx="50" cy="50" r="35" fill="none" stroke="#6366f1" stroke-width="16"
+            stroke-dasharray="220" stroke-dashoffset="0"
+            transform="rotate(-90 50 50)"/>
+          <circle cx="50" cy="50" r="35" fill="none" stroke="#06b6d4" stroke-width="16"
+            [attr.stroke-dasharray]="adminArc + ' ' + (220 - adminArc)"
+            [attr.stroke-dashoffset]="-(220 - adminArc)"
+            transform="rotate(-90 50 50)"/>
+          <text x="50" y="47" text-anchor="middle" font-size="11" font-weight="700" fill="white">{{ adminCount }}/{{ totalUsers }}</text>
+          <text x="50" y="58" text-anchor="middle" font-size="7" fill="#94a3b8">users</text>
+        </svg>
+        <div class="donut-legend">
+          <div class="legend-item">
+            <span class="legend-dot" style="background:#6366f1"></span>
+            <span>Admin ({{ adminCount }})</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background:#06b6d4"></span>
+            <span>User ({{ userCount }})</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tables Row -->
+  <div class="tables-row">
+
+    <!-- Recent Users -->
+    <div class="card">
+      <div class="section-header">
+        <h3 class="section-title">Recent Users</h3>
+        <a *ngIf="auth.isAdmin()" routerLink="/users" class="see-all">View all →</a>
+      </div>
+      <div class="user-list">
+        <div *ngFor="let u of recentUsers" class="user-item">
+          <div class="user-avatar">{{ u.avatar }}</div>
+          <div class="user-info">
+            <p class="user-name">{{ u.name }}</p>
+            <p class="user-dept">{{ u.department }}</p>
+          </div>
+          <span [class]="u.role === 'admin' ? 'badge-admin' : 'badge-user'">{{ u.role }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Products -->
+    <div class="card">
+      <div class="section-header">
+        <h3 class="section-title">Product Overview</h3>
+        <a routerLink="/products" class="see-all">View all →</a>
+      </div>
+      <div class="product-list">
+        <div *ngFor="let p of topProducts" class="product-item">
+          <div class="product-icon">📦</div>
+          <div class="product-info">
+            <p class="product-name">{{ p.name }}</p>
+            <div class="stock-bar-wrap">
+              <div class="stock-bar-bg">
+                <div class="stock-bar-fill" [style.width.%]="(p.stock / 200) * 100"></div>
+              </div>
+              <span class="stock-count">{{ p.stock }}</span>
+            </div>
+          </div>
+          <span class="product-price">{{ p.price | currency }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-shell>

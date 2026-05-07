@@ -1,0 +1,12 @@
+<div *ngIf="visible" class="modal-backdrop">
+  <div class="modal-overlay" (click)="cancelled.emit()"></div>
+  <div class="modal-box">
+    <div class="modal-icon">⚠️</div>
+    <h3 class="modal-title">{{ title }}</h3>
+    <p class="modal-message">{{ message }}</p>
+    <div class="modal-actions">
+      <button class="btn-secondary flex-1" (click)="cancelled.emit()">Cancel</button>
+      <button class="btn-danger flex-1"    (click)="confirmed.emit()">{{ confirmLabel }}</button>
+    </div>
+  </div>
+</div>

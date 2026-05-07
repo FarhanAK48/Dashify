@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* { box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; @apply bg-slate-950 text-white; margin: 0; }
+
+@layer components {
+  .btn-primary   { @apply bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors text-sm cursor-pointer border-0 inline-flex items-center gap-2 no-underline; }
+  .btn-secondary { @apply bg-slate-700 hover:bg-slate-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors text-sm cursor-pointer border-0 inline-flex items-center gap-2 no-underline; }
+  .btn-danger    { @apply bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors text-sm cursor-pointer border-0 inline-flex items-center gap-2; }
+  .card          { @apply bg-slate-800 border border-slate-700/60 rounded-xl p-6; }
+  .form-input    { @apply w-full bg-slate-700 border border-slate-600 text-white rounded-lg px-3 py-2 text-sm outline-none transition-colors placeholder-slate-400 focus:border-indigo-500 font-sans; }
+  .badge-admin   { @apply bg-purple-500/20 text-purple-300 border border-purple-500/30 text-xs px-2 py-0.5 rounded-full font-medium; }
+  .badge-user    { @apply bg-blue-500/20 text-blue-300 border border-blue-500/30 text-xs px-2 py-0.5 rounded-full font-medium; }
+  .badge-active  { @apply bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs px-2 py-0.5 rounded-full font-medium; }
+  .badge-inactive{ @apply bg-red-500/20 text-red-300 border border-red-500/30 text-xs px-2 py-0.5 rounded-full font-medium; }
+  .table-th      { @apply px-4 py-3 text-left text-slate-400 font-medium text-xs uppercase tracking-wider cursor-pointer hover:text-white select-none; }
+  .table-td      { @apply px-4 py-3 text-sm; }
+  .table-row     { @apply border-b border-slate-700/50 hover:bg-slate-800/50 transition-colors; }
+}

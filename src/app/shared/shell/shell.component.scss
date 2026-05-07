@@ -1,0 +1,29 @@
+.layout {
+  min-height: 100vh;
+  background: #020617;
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  transition: margin-left 0.3s;
+}
+
+.content-shifted {
+  margin-left: 16rem; /* w-64 = 256px */
+}
+
+.main-area {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-x: hidden;
+}
+
+@media (max-width: 1024px) {
+  .content-shifted {
+    margin-left: 0;
+  }
+}

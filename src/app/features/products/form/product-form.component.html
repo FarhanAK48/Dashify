@@ -1,0 +1,67 @@
+<app-shell [pageTitle]="isEdit ? 'Edit Product' : 'Add Product'">
+  <div class="form-page">
+
+    <div class="breadcrumb">
+      <a routerLink="/products" class="breadcrumb-link">Products</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">{{ isEdit ? 'Edit Product' : 'New Product' }}</span>
+    </div>
+
+    <div class="card form-card">
+      <h2 class="form-title">{{ isEdit ? 'Edit Product' : 'Add New Product' }}</h2>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="fields-grid">
+
+          <div class="field full-width">
+            <label class="field-label">Product Name *</label>
+            <input type="text" formControlName="name" class="form-input" placeholder='e.g. MacBook Pro 16"' />
+            <p *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="field-error">Name is required.</p>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Category</label>
+            <select formControlName="category" class="form-input">
+              <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Status</label>
+            <select formControlName="status" class="form-input">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Price ($) *</label>
+            <input type="number" formControlName="price" class="form-input" placeholder="0.00" min="0" />
+            <p *ngIf="form.get('price')?.invalid && form.get('price')?.touched" class="field-error">Valid price required.</p>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Stock *</label>
+            <input type="number" formControlName="stock" class="form-input" placeholder="0" min="0" />
+            <p *ngIf="form.get('stock')?.invalid && form.get('stock')?.touched" class="field-error">Stock is required.</p>
+          </div>
+
+          <div class="field full-width">
+            <label class="field-label">Description</label>
+            <textarea formControlName="description" class="form-input" rows="3" placeholder="Product description..."></textarea>
+          </div>
+
+        </div>
+
+        <div *ngIf="success()" class="success-msg">
+          ✅ Product {{ isEdit ? 'updated' : 'created' }} successfully! Redirecting...
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">{{ isEdit ? 'Save Changes' : 'Create Product' }}</button>
+          <a routerLink="/products" class="btn-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</app-shell>

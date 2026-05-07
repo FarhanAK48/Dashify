@@ -1,0 +1,91 @@
+<app-shell pageTitle="Products">
+
+  <div class="page-header">
+    <div>
+      <h2 class="page-title">Products</h2>
+      <p class="page-sub">{{ filtered().length }} products</p>
+    </div>
+    <a *ngIf="auth.isAdmin()" routerLink="/products/new" class="btn-primary">+ Add Product</a>
+  </div>
+
+  <div class="card filters-card">
+    <div class="filters-grid">
+      <input [(ngModel)]="search" (ngModelChange)="onSearch()" class="form-input" placeholder="🔍 Search products..." />
+      <select [(ngModel)]="categoryFilter" (ngModelChange)="onSearch()" class="form-input">
+        <option value="">All Categories</option>
+        <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+      </select>
+      <select [(ngModel)]="statusFilter" (ngModelChange)="onSearch()" class="form-input">
+        <option value="">All Status</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card table-card">
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th *ngFor="let col of columns" class="table-th" (click)="col.key && sort(col.key)">
+              {{ col.label }}
+              <span *ngIf="col.key === sortKey()">{{ sortDir() === 'asc' ? '↑' : '↓' }}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of paginated()" class="table-row">
+            <td class="table-td">
+              <p class="product-name">{{ p.name }}</p>
+              <p class="product-desc">{{ p.description }}</p>
+            </td>
+            <td class="table-td">
+              <span class="cat-badge">{{ p.category }}</span>
+            </td>
+            <td class="table-td price-cell">{{ p.price | currency }}</td>
+            <td class="table-td">
+              <span [class.text-red-400]="p.stock === 0" [class.text-white]="p.stock > 0" class="font-medium">{{ p.stock }}</span>
+              <span *ngIf="p.stock === 0" class="out-label"> Out of stock</span>
+            </td>
+            <td class="table-td">
+              <span [class]="p.status === 'active' ? 'badge-active' : 'badge-inactive'">{{ p.status }}</span>
+            </td>
+            <td class="table-td text-slate-400">{{ p.createdAt }}</td>
+            <td class="table-td">
+              <ng-container *ngIf="auth.isAdmin(); else viewOnly">
+                <div class="actions">
+                  <a [routerLink]="['/products/edit', p.id]" class="action-edit">Edit</a>
+                  <button (click)="confirmDelete(p)" class="action-delete">Delete</button>
+                </div>
+              </ng-container>
+              <ng-template #viewOnly>
+                <span class="view-only">View only</span>
+              </ng-template>
+            </td>
+          </tr>
+          <tr *ngIf="filtered().length === 0">
+            <td colspan="7" class="empty-row">No products found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <p class="page-info">Page {{ currentPage() }} of {{ totalPages() }}</p>
+      <div class="page-btns">
+        <button class="btn-secondary" style="padding:0.375rem 0.75rem;font-size:0.75rem" (click)="prevPage()" [disabled]="currentPage()===1">← Prev</button>
+        <button class="btn-secondary" style="padding:0.375rem 0.75rem;font-size:0.75rem" (click)="nextPage()" [disabled]="currentPage()===totalPages()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <app-confirm-modal
+    [visible]="showConfirm()"
+    title="Delete Product"
+    [message]="'Delete ' + (deleteTarget()?.name ?? '') + '? This cannot be undone.'"
+    (confirmed)="doDelete()"
+    (cancelled)="showConfirm.set(false)">
+  </app-confirm-modal>
+
+</app-shell>

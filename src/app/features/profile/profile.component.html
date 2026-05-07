@@ -1,0 +1,72 @@
+<app-shell pageTitle="Profile">
+  <div class="profile-page">
+
+    <!-- Header card -->
+    <div class="card profile-header-card">
+      <div class="profile-header">
+        <div class="profile-avatar">{{ auth.currentUser()?.name?.charAt(0) }}</div>
+        <div>
+          <h2 class="profile-name">{{ auth.currentUser()?.name }}</h2>
+          <p class="profile-email">{{ auth.currentUser()?.email }}</p>
+          <span class="mt-2 inline-block" [class]="auth.isAdmin() ? 'badge-admin' : 'badge-user'">
+            {{ auth.currentUser()?.role | titlecase }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info card -->
+    <div class="card info-card">
+      <h3 class="section-title">Account Information</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <p class="info-label">Full Name</p>
+          <p class="info-value">{{ auth.currentUser()?.name }}</p>
+        </div>
+        <div class="info-item">
+          <p class="info-label">Email Address</p>
+          <p class="info-value">{{ auth.currentUser()?.email }}</p>
+        </div>
+        <div class="info-item">
+          <p class="info-label">Role</p>
+          <p class="info-value capitalize">{{ auth.currentUser()?.role }}</p>
+        </div>
+        <div class="info-item">
+          <p class="info-label">Auth Token</p>
+          <p class="info-token">{{ auth.currentUser()?.token }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Permissions card -->
+    <div class="card perms-card">
+      <h3 class="section-title">Permissions</h3>
+      <div class="perms-list">
+        <div class="perm-item">
+          <span class="perm-icon">✅</span>
+          <span>View Dashboard</span>
+        </div>
+        <div class="perm-item">
+          <span class="perm-icon">✅</span>
+          <span>Browse Products</span>
+        </div>
+        <div class="perm-item" [class.perm-denied]="!auth.isAdmin()">
+          <span class="perm-icon">{{ auth.isAdmin() ? '✅' : '🚫' }}</span>
+          <span>Manage Users (Admin only)</span>
+        </div>
+        <div class="perm-item" [class.perm-denied]="!auth.isAdmin()">
+          <span class="perm-icon">{{ auth.isAdmin() ? '✅' : '🚫' }}</span>
+          <span>Add / Edit / Delete Products (Admin only)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sign out card -->
+    <div class="card signout-card">
+      <h3 class="section-title">Sign Out</h3>
+      <p class="signout-desc">You will be redirected to the login page.</p>
+      <button class="btn-danger" (click)="auth.logout()">Sign Out</button>
+    </div>
+
+  </div>
+</app-shell>
